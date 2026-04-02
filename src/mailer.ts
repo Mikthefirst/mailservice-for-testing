@@ -15,6 +15,22 @@ let transporter = nodemailer.createTransport({
     auth: {
         user: EMAIL,
         pass: GMAIL_PASS
+    },
+    tls: {
+        rejectUnauthorized: false
+    },
+    pool: true, 
+    maxConnections: 1,
+    rateDelta: 1000,
+    rateLimit: 5
+});
+
+
+transporter.verify(function(error, success) {
+    if (error) {
+        console.error('SMTP connection error:', error);
+    } else {
+        console.log('SMTP server is ready to send messages');
     }
 });
 
