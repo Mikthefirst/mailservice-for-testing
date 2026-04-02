@@ -11,7 +11,9 @@ if (!GMAIL_PASS || !EMAIL) {
 }
 
 let transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: 'smtp.gmail.com',
+    port: 587,  // Вместо 465
+    secure: false,  // false для 587
     auth: {
         user: EMAIL,
         pass: GMAIL_PASS
@@ -22,7 +24,11 @@ let transporter = nodemailer.createTransport({
     pool: true, 
     maxConnections: 1,
     rateDelta: 1000,
-    rateLimit: 5
+    rateLimit: 5,
+    connectionTimeout: 30000,  // 30 секунд на соединение
+    greetingTimeout: 30000,     // 30 секунд на приветствие
+    socketTimeout: 30000,       // 30 секунд на сокет
+    debug: true                 // Включите для отладки
 });
 
 
